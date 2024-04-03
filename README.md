@@ -32,4 +32,4 @@ To use this project, follow these steps:
 
 ## License
 
-This project is licensed under the Quchan Univercity.
+This project is licensed under the Quchan University.
