@@ -24,6 +24,7 @@ This project aims to provide a solution for [describe the problem or purpose of 
 ## Usage
 
 To use this project, follow these steps:
+JUST CONTACT WITH US TO PEREMITION USAGE!
 
 1. Clone the repository: `git clone https://github.com/username/ncaseTrust.git`
 2. Install dependencies: `npm install`
