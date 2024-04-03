@@ -16,7 +16,7 @@ This project aims to provide a solution for [describe the problem or purpose of 
 
 ## Instructor
 
-- [Dr. Mohammad Hossein Cigari]
+- Dr. Mohammad Hossein Sigari
 
 ## Usage
 
