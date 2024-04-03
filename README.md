@@ -9,14 +9,17 @@ ncaseTrust is a project developed by Alireza Rahimi and Amirhossein Shakery as p
 
 This project aims to provide a solution for [describe the problem or purpose of your project briefly].
 
+
+## Instructor
+
+- Dr. Mohammad Hossein Sigari
+
 ## Contributors
 
 - [Alireza Rahimi](https://github.com/rahimtech)
 - [Amirhossein Shakery](https://github.com/amirhossein-shakeri)
 
-## Instructor
 
-- Dr. Mohammad Hossein Sigari
 
 ## Usage
 
