@@ -5,10 +5,6 @@
 
 ncaseTrust is a project developed by Alireza Rahimi and Amirhossein Shakery as part of a course called "Special Topics" under the supervision of Dr. Mohammad Hossein Cigari at the University of Science and Technology of Quchan.
 
-## Description
-
-This project aims to provide a solution for [describe the problem or purpose of your project briefly].
-
 
 ## Instructor
 
