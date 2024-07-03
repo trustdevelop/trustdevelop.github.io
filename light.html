@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Audio Visualization</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #000;
+        margin: 0;
+        flex-direction: column;
+      }
+      canvas {
+        background-color: #333;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="visualizer" width="800" height="200"></canvas>
+    <canvas id="fft" width="800" height="200"></canvas>
+    <script>
+      const visualizerCanvas = document.getElementById("visualizer");
+      const visualizerCtx = visualizerCanvas.getContext("2d");
+
+      const fftCanvas = document.getElementById("fft");
+      const fftCtx = fftCanvas.getContext("2d");
+
+      const NUM_LEDS = 10;
+
+      navigator.mediaDevices
+        .getUserMedia({ audio: true, video: false })
+        .then(function (stream) {
+          const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          const source = audioCtx.createMediaStreamSource(stream);
+          const analyser = audioCtx.createAnalyser();
+          analyser.fftSize = 256;
+          source.connect(analyser);
+
+          const bufferLength = analyser.frequencyBinCount;
+          const dataArray = new Float32Array(bufferLength);
+
+          function getColor(value) {
+            console.log("value::: ", value);
+            if (value > -30) {
+              return "red";
+            } else if (value > -60) {
+              return "blue";
+            } else {
+              return "green";
+            }
+          }
+
+          function drawVisualizer() {
+            analyser.getFloatFrequencyData(dataArray);
+
+            visualizerCtx.fillStyle = "rgb(0, 0, 0)";
+            visualizerCtx.fillRect(0, 0, visualizerCanvas.width, visualizerCanvas.height);
+
+            const circleRadius = 20;
+            const spacing = (visualizerCanvas.width - NUM_LEDS * circleRadius * 2) / (NUM_LEDS + 1);
+            let x = spacing + circleRadius;
+
+            for (let i = 0; i < NUM_LEDS; i++) {
+              const value = dataArray[i];
+              const color = getColor(value);
+
+              visualizerCtx.beginPath();
+              visualizerCtx.arc(x, visualizerCanvas.height / 2, circleRadius, 0, 2 * Math.PI);
+              visualizerCtx.fillStyle = color;
+              visualizerCtx.fill();
+
+              x += circleRadius * 2 + spacing;
+            }
+
+            requestAnimationFrame(drawVisualizer);
+          }
+
+          function drawSTFT() {
+            analyser.getFloatFrequencyData(dataArray);
+
+            fftCtx.fillStyle = "rgb(0, 0, 0)";
+            fftCtx.fillRect(0, 0, fftCanvas.width, fftCanvas.height);
+
+            const barWidth = (fftCanvas.width / bufferLength) * 2.5;
+            let x = 0;
+
+            for (let i = 0; i < bufferLength; i++) {
+              const value = dataArray[i];
+              const barHeight = (value + 140) * 2; // Scale value for better visibility
+
+              fftCtx.fillStyle = "rgb(" + (barHeight + 100) + ",50,50)";
+              fftCtx.fillRect(x, fftCanvas.height - barHeight / 2, barWidth, barHeight / 2);
+
+              x += barWidth + 1;
+            }
+
+            requestAnimationFrame(drawSTFT);
+          }
+
+          drawVisualizer();
+          drawSTFT();
+        })
+        .catch(function (err) {
+          console.log("The following gUM error occurred: " + err);
+        });
+    </script>
+  </body>
+</html>
